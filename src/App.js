@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from "react";
+import Header from "./components/Header";
+import Income from "./components/Income";
+import Expenselist from "./components/Expenselist";
+
 
 function App() {
+  const [income, setIncome] = useState([]);
+  const [totalIncome, setTotalIncome] = useState(0);
+
+  useEffect(() =>{
+    let temp = 0;
+    for( let i=0; i< income.length;i++){
+      temp += parseInt(income[i].price);
+    }
+
+    setTotalIncome(temp);
+  }, [income])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <Header totalIncome={totalIncome} />
+     <Income income={income} setIncome={setIncome}/>
+     <Expenselist income={income} setIncome={setIncome}/>
     </div>
   );
 }
